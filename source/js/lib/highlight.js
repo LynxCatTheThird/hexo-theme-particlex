@@ -25,14 +25,45 @@ mixins.highlight = {
                 <div class="code-content hljs">${highlighted}</div>
                 <div class="language">${language}</div>
                 <div class="copycode">
-                    <i class="fa-solid fa-copy fa-fw"></i>
-                    <i class="fa-solid fa-check fa-fw"></i>
+                    <i class="fa-solid fa-chevron-down fold-btn fa-fw"></i>
+                    <i class="fa-solid fa-expand expand-btn fa-fw"></i>
+                    <i class="fa-solid fa-copy copy-btn fa-fw"></i>
+                    <i class="fa-solid fa-check check-btn fa-fw"></i>
                 </div>
                 `;
                 let content = i.querySelector(".code-content");
                 hljs.lineNumbersBlock(content, { singleLine: true });
                 let copycode = i.querySelector(".copycode");
-                copycode.addEventListener("click", async () => {
+                
+                let foldBtn = i.querySelector(".fold-btn");
+                let expandBtn = i.querySelector(".expand-btn");
+                let copyBtn = i.querySelector(".copy-btn");
+
+                foldBtn.addEventListener("click", () => {
+                    if (i.classList.contains("folded")) {
+                        foldBtn.classList.remove("fa-chevron-right");
+                        foldBtn.classList.add("fa-chevron-down");
+                        i.classList.remove("folded");
+                    } else {
+                        foldBtn.classList.remove("fa-chevron-down");
+                        foldBtn.classList.add("fa-chevron-right");
+                        i.classList.add("folded");
+                    }
+                });
+
+                expandBtn.addEventListener("click", () => {
+                    if (i.classList.contains("expanded")) {
+                        expandBtn.classList.remove("fa-compress");
+                        expandBtn.classList.add("fa-expand");
+                        i.classList.remove("expanded");
+                    } else {
+                        expandBtn.classList.remove("fa-expand");
+                        expandBtn.classList.add("fa-compress");
+                        i.classList.add("expanded");
+                    }
+                });
+
+                copyBtn.addEventListener("click", async () => {
                     if (this.copying) return;
                     this.copying = true;
                     copycode.classList.add("copied");

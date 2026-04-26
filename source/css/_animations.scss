@@ -1,0 +1,45 @@
+@use "variables" as *;
+
+@keyframes loop1 {
+    from { transform: rotate(30deg); }
+    to { transform: rotate(390deg); }
+}
+@keyframes loop2 {
+    from { transform: rotate(60deg); }
+    to { transform: rotate(420deg); }
+}
+@keyframes loop3 {
+    from { transform: rotate(90deg); }
+    to { transform: rotate(450deg); }
+}
+@keyframes loop4 {
+    from { transform: rotate(120deg); }
+    to { transform: rotate(480deg); }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s;
+}
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.into-enter-active {
+    transition: opacity 0.5s, transform 0.5s;
+}
+.into-enter-from {
+    opacity: 0;
+    transform: scale(1.1);
+}
+
+.slide-enter-active,
+.slide-leave-active {
+    transition: margin-top 0.3s, opacity 0.3s;
+}
+.slide-enter-from,
+.slide-leave-to {
+    margin-top: -300px;
+    opacity: 0;
+}
