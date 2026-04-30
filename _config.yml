@@ -8,8 +8,17 @@ avatar: /images/avatar.jpg
 background:
     - /images/background.jpg
 
-# Loading image
-loading: /images/loading.gif
+# Loading screen
+loading:
+    enable: true
+    gif: /images/loading.gif
+
+# Fonts configuration (use system fonts by default)
+fonts:
+    enable: false
+    url: "https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&display=swap"
+    sans: "'Lexend'"
+    mono: "'Fira Code'"
 
 # Optional colors for category and tag
 colors:
@@ -76,10 +85,17 @@ polyfill:
 highlight:
     enable: true
     style: github
+    foldThreshold: 40
 
-# KaTeX math rendering
+# Math rendering
+# type: katex | mathjax | false
 math:
-    enable: false
+    type: katex
+    katex:
+        copy_tex: true
+        mhchem: false
+    mathjax:
+        mhchem: false
 
 # Image preview
 preview:

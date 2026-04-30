@@ -47,8 +47,7 @@
     --shadow-go-post-hover: -2px -2px 10px 0 rgba(154, 187, 247, 0.48);
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
+@mixin dark-theme-vars {
         --color-primary: #66afef;
         --color-text-main: #c9d1d9;
         --color-text-secondary: #8b949e;
@@ -95,6 +94,15 @@
         --bg-go-post: linear-gradient(120deg, #4b6a9e 0%, #a66a9c 100%);
         --shadow-go-post: 2px 2px 10px 0 rgba(0, 0, 0, 0.5);
         --shadow-go-post-hover: -2px -2px 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+html[data-theme="dark"] {
+    @include dark-theme-vars;
+}
+
+@media (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]) {
+        @include dark-theme-vars;
     }
 }
 
@@ -143,8 +151,8 @@ $bg-go-post: var(--bg-go-post);
 $shadow-go-post: var(--shadow-go-post);
 $shadow-go-post-hover: var(--shadow-go-post-hover);
 
-$font-family-sans: Lexend, "Noto Sans SC", sans-serif;
-$font-family-mono: "Fira Code", "Noto Sans SC", monospace;
+$font-family-sans: var(--font-family-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif);
+$font-family-mono: var(--font-family-mono, Menlo, Monaco, Consolas, "Courier New", monospace);
 $transition-duration: 0.25s;
 
 @mixin desktop {
@@ -153,7 +161,7 @@ $transition-duration: 0.25s;
     }
 }
 
-@mixin desktop-large {
+@mixin desktop-medium {
     @media (min-width: 900px) and (max-width: 1200px) {
         @content;
     }

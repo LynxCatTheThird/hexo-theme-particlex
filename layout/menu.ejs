@@ -1,36 +1,44 @@
-<div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+<div id="menu">
     <nav id="desktop-menu">
         <a class="title" href="<%- config.root %>">
             <span><%= config.title.toUpperCase() %></span>
         </a>
         <% Object.entries(theme.menu).forEach(([key, value]) => { %>
         <a href="<%- url_for(value.link) %>">
-            <i class="fa-<%- value.theme %> fa-<%- value.name %> fa-fw"></i>
+            <i class="fa-<%- value.theme %> fa-<%- value.name %> fa-fw" aria-hidden="true"></i>
             <span>&ensp;<%= key %></span>
         </a>
         <% }); %>
+        <a id="theme-button" class="theme-button" style="cursor: pointer;">
+            <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+            <span>&ensp;Theme</span>
+        </a>
     </nav>
     <nav id="mobile-menu">
-        <div class="title" @click="showMenuItems = !showMenuItems">
-            <i class="fa-solid fa-bars fa-fw"></i>
+        <button class="title" id="toggle-menu" aria-label="Toggle Menu">
+            <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
             <span>&emsp;<%= config.title.toUpperCase() %></span>
-        </div>
-        <transition name="slide">
-            <div class="items" v-show="showMenuItems">
-                <% Object.entries(theme.menu).forEach(([key, value]) => { %>
-                <a href="<%- url_for(value.link) %>">
-                    <div class="item">
-                        <div style="min-width: 20px; max-width: 50px; width: 10%">
-                            <i class="fa-<%- value.theme %> fa-<%- value.name %> fa-fw"></i>
-                        </div>
-                        <div style="min-width: 100px; max-width: 150%; width: 20%"><%= key %></div>
+        </button>
+        <div class="items slide-transition slide-hidden" id="mobile-menu-items">
+            <% Object.entries(theme.menu).forEach(([key, value]) => { %>
+            <a href="<%- url_for(value.link) %>">
+                <div class="item">
+                    <div class="item-icon">
+                        <i class="fa-<%- value.theme %> fa-<%- value.name %> fa-fw" aria-hidden="true"></i>
                     </div>
-                </a>
-                <% }); %>
-            </div>
-        </transition>
+                    <div class="item-label"><%= key %></div>
+                </div>
+            </a>
+            <% }); %>
+            <a id="theme-button-mobile" class="theme-button" style="cursor: pointer;">
+                <div class="item">
+                    <div class="item-icon">
+                        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+                    </div>
+                    <div class="item-label">Theme</div>
+                </div>
+            </a>
+        </div>
     </nav>
 </div>
-<transition name="fade">
-    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
-</transition>
+<div id="menu-curtain" class="fade-transition fade-hidden"></div>

@@ -1,27 +1,24 @@
-mixins.preview = {
-    data() {
-        return { previewShow: false };
-    },
-    created() {
-        this.renderers.push(this.preview);
-    },
-    methods: {
-        preview() {
-            let preview = this.$refs.preview,
-                content = this.$refs.previewContent;
-            let images = document.querySelectorAll("img");
-            for (let i of images)
-                i.addEventListener("click", () => {
-                    content.alt = i.alt;
-                    content.src = i.src;
-                    this.previewShow = true;
-                });
-            preview.addEventListener("click", () => {
-                this.previewShow = false;
+(function() {
+    window.renderers.push(() => {
+        let preview = document.getElementById("preview");
+        let content = document.getElementById("preview-content");
+        if (!preview || !content) return;
+
+        let images = document.querySelectorAll("img");
+        for (let i of images) {
+            if (i.id === "preview-content" || i.closest("#loading")) continue;
+            i.addEventListener("click", () => {
+                content.alt = i.alt;
+                content.src = i.src;
+                preview.classList.remove("fade-hidden");
             });
-            window.addEventListener("resize", () => {
-                this.previewShow = false;
-            });
-        },
-    },
-};
+        }
+
+        preview.addEventListener("click", () => {
+            preview.classList.add("fade-hidden");
+        });
+        window.addEventListener("resize", () => {
+            preview.classList.add("fade-hidden");
+        });
+    });
+})();

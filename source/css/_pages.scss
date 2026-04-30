@@ -1,47 +1,40 @@
 @use "variables" as *;
 
-// Article
-.article {
+.article, #archives {
     box-sizing: border-box;
-    font-size: 15px;
-    margin: auto;
-    margin-top: 100px;
+    margin: 100px auto 0;
     padding: 20px;
-    
     @include desktop { width: 900px; }
     @include mobile { width: 100%; }
+}
 
-    .content { margin: 50px 0; }
+.article {
+    font-size: 15px;
+
+    .content {
+        margin: 50px 0;
+        p a, a.footnote-backref {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-thickness: 1px;
+            &:hover {
+                text-decoration-thickness: 2px;
+            }
+        }
+    }
 
     .info {
         line-height: 1.7;
-
-        .category, .tags, .tags .tag {
+        .category, .tags, .tags .tag, .date {
             display: inline-block;
             margin-right: 10px;
         }
-
-        .date {
-            color: $color-text-secondary;
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        a { color: $color-text-secondary; }
+        .date, a { color: $color-text-secondary; }
     }
 }
 
-// Archives
 #archives {
-    box-sizing: border-box;
-    margin: auto;
-    margin-top: 100px;
-    padding: 20px;
-
-    @include desktop { width: 900px; }
-    @include desktop-large { width: 800px; }
-    @include mobile { width: 100%; }
-
+    @include desktop-medium { width: 800px; }
     h3 { margin: 10px 0; }
 
     .categories-tags {
@@ -81,27 +74,19 @@
         }
     }
 
-    .category, .tags .tag {
-        display: inline-block;
-        margin-right: 10px;
-    }
-
-    a, .tag-icon, .item-time {
-        color: $color-text-secondary;
-    }
-    .tags { display: inline-block; }
+    .category, .tags .tag, .tags { display: inline-block; }
+    .category, .tags .tag { margin-right: 10px; }
+    a, .tag-icon, .item-time { color: $color-text-secondary; }
     .info { line-height: 1.7; }
 }
 
-// Home Card
 #home-card {
     width: 300px;
-    @include desktop-large { display: none; }
+    @include desktop-medium { display: none; }
     @include mobile { display: none; }
 
     #card-style {
         background: $color-white;
-        border: none;
         border-radius: 10px;
         box-shadow: $shadow-light;
         display: flex;
@@ -112,7 +97,7 @@
         position: sticky;
         text-align: center;
         top: 10vh;
-        width: 300px;
+        width: 100%;
     }
 
     #card-div {
@@ -201,83 +186,41 @@
 
     #home-info {
         margin: auto;
-
-        @include desktop {
-            height: 500px;
-            width: 500px;
-        }
-        @include mobile {
-            height: 350px;
-            width: 350px;
-        }
+        @include desktop { height: 500px; width: 500px; }
+        @include mobile { height: 350px; width: 350px; }
 
         .info {
             align-items: center;
             display: flex;
             justify-content: center;
+            position: relative;
             text-align: center;
-
-            @include desktop {
-                border-radius: 50%;
-                height: 500px;
-                width: 500px;
-            }
-            @include mobile {
-                background: $bg-preview;
-                height: 350px;
-                margin: auto;
-                width: 350px;
-            }
+            @include desktop { border-radius: 50%; height: 500px; width: 500px; }
+            @include mobile { background: $bg-preview; height: 350px; width: 350px; margin: auto; border-radius: 50%; }
 
             .wrap {
                 @include desktop { padding: 25px; }
                 @include mobile { padding: 50px; }
 
-                h1 {
-                    color: $color-black;
-                    font-weight: bold;
-                    margin-bottom: 10px;
-                    @include desktop { font-size: 52px; }
-                    @include mobile { font-size: 46px; }
-                }
-
-                h3 {
-                    color: $color-black;
-                    margin: 10px 0;
-                    @include desktop { font-size: 24px; }
-                    @include mobile { font-size: 20px; }
-                }
-
-                h5 {
-                    color: $color-black;
-                    margin: 20px 0;
-                    @include desktop { font-size: 16px; }
-                    @include mobile { font-size: 14px; }
-                }
+                h1, h2, h3 { color: $color-black; }
+                h1 { font-weight: bold; margin-bottom: 10px; @include desktop { font-size: 52px; } @include mobile { font-size: 46px; } }
+                h2 { margin: 10px 0; @include desktop { font-size: 24px; } @include mobile { font-size: 20px; } }
+                h3 { margin: 20px 0; @include desktop { font-size: 16px; } @include mobile { font-size: 14px; } }
             }
         }
 
         .loop {
             background: $color-white;
             border-radius: 38% 62% 63% 37%/41% 44% 56% 59%;
-            
-            @include desktop {
-                display: inline-block;
-                height: 500px;
-                position: absolute;
-                width: 500px;
-            }
-            @include mobile {
-                display: none;
-                height: 350px;
-                position: absolute;
-                width: 350px;
-            }
+            display: inline-block;
+            position: absolute;
+            @include desktop { height: 500px; width: 500px; }
+            @include mobile { display: none; height: 350px; width: 350px; }
 
-            &:nth-child(1) { animation: loop1 10s linear infinite; opacity: 0.3; transform: rotate(30deg); }
-            &:nth-child(2) { animation: loop2 15s linear infinite; opacity: 0.45; transform: rotate(60deg); }
-            &:nth-child(3) { animation: loop3 10s linear infinite; opacity: 0.3; transform: rotate(90deg); }
-            &:nth-child(4) { animation: loop4 15s linear infinite; opacity: 0.45; transform: rotate(120deg); }
+            &:nth-child(1) { --offset: 30deg; animation: loop 10s linear infinite; opacity: 0.3; }
+            &:nth-child(2) { --offset: 60deg; animation: loop 15s linear infinite; opacity: 0.45; }
+            &:nth-child(3) { --offset: 90deg; animation: loop 10s linear infinite; opacity: 0.3; }
+            &:nth-child(4) { --offset: 120deg; animation: loop 15s linear infinite; opacity: 0.45; }
         }
     }
 }
@@ -292,7 +235,7 @@
     padding: 20px;
 
     @include desktop { max-width: 1200px; }
-    @include desktop-large { width: 800px; }
+    @include desktop-medium { width: 800px; }
     @include mobile { width: 100%; }
 
     &.home-posts-wrap-no-card #home-posts {
@@ -307,7 +250,7 @@
         margin-right: 50px;
         width: 850px;
     }
-    @include desktop-large { width: 100%; }
+    @include desktop-medium { width: 100%; }
     @include mobile {
         margin: auto;
         width: 100%;
@@ -317,16 +260,10 @@
         background: $color-white;
         border-radius: 20px;
         box-shadow: $shadow-light;
+        position: relative;
         transition: box-shadow $transition-duration, transform $transition-duration;
-
-        @include desktop {
-            margin-bottom: 25px;
-            padding: 50px;
-        }
-        @include mobile {
-            margin-bottom: 30px;
-            padding: 20px 30px;
-        }
+        @include desktop { margin-bottom: 25px; padding: 50px; }
+        @include mobile { margin-bottom: 30px; padding: 20px 30px; }
 
         &:hover {
             box-shadow: $shadow-hover;
@@ -343,15 +280,9 @@
             margin-top: 15px;
             text-align: center;
             width: 100%;
-
-            .category {
-                display: inline-block;
-                margin-right: 25px;
-                a { color: $color-text-secondary; }
-            }
-
-            .date { display: inline-block; }
-            .special { display: inline-block; margin-left: 25px; }
+            .category, .date, .special { display: inline-block; }
+            .category { margin-right: 25px; a { color: $color-text-secondary; } }
+            .special { margin-left: 25px; }
         }
 
         .description {
@@ -403,18 +334,7 @@
         width: 100%;
         user-select: none;
 
-        .current {
-            border-radius: 5px;
-            color: $color-danger;
-            display: inline-block;
-            height: 35px;
-            line-height: 35px;
-            margin: 0 7px;
-            padding: 5px;
-            width: 35px;
-        }
-
-        .page-num, .page-omit {
+        .current, .page-num, .page-omit {
             border-radius: 5px;
             display: inline-block;
             height: 35px;
@@ -424,13 +344,10 @@
             width: 35px;
         }
 
+        .current { color: $color-danger; }
         .page-num {
             transition: background $transition-duration, color $transition-duration;
-            &:hover {
-                background: $color-primary;
-                color: #fff;
-                opacity: 1;
-            }
+            &:hover { background: $color-primary; color: #fff; opacity: 1; }
         }
 
         a { color: $color-text-muted; }

@@ -15,40 +15,57 @@
 <!DOCTYPE html>
 <html lang="<%- config.language %>">
 <head>
+    <script>
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+            document.documentElement.setAttribute("data-theme", savedTheme);
+        }
+        function updateHighlightStyle() {
+            let currentTheme = document.documentElement.getAttribute("data-theme");
+            if (!currentTheme) return;
+            let lightStyle = document.getElementById("highlight-style-light");
+            let darkStyle = document.getElementById("highlight-style-dark");
+            if (lightStyle && darkStyle) {
+                if (currentTheme === "dark") {
+                    lightStyle.media = "none";
+                    darkStyle.media = "all";
+                } else {
+                    lightStyle.media = "all";
+                    darkStyle.media = "none";
+                }
+            }
+        }
+        window.addEventListener("DOMContentLoaded", updateHighlightStyle);
+    </script>
     <meta charset="utf-8" />
     <title><%= title %></title>
     <meta name="author" content="<%- config.author %>" />
     <meta name="description" content="<%- config.description %>" />
     <meta name="keywords" content="<%- config.keywords %>" />
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="<%- url_for(theme.avatar) %>" />
     <%- partial("import", { type }) %>
 </head>
 <body>
     <div id="layout">
-        <transition name="fade">
-            <div id="loading" v-show="loading">
-                <div id="loading-circle">
-                    <h2>LOADING</h2>
-                    <p>加载过慢请开启缓存 浏览器默认开启</p>
-                    <img src="<%- url_for(theme.loading) %>" />
-                </div>
+        <% if (theme.loading && theme.loading.enable) { %>
+        <div id="loading" class="fade-transition" role="status" aria-label="页面加载中">
+            <div id="loading-circle">
+                <h2>LOADING</h2>
+                <p>加载过慢请开启缓存 浏览器默认开启</p>
+                <img src="<%- url_for(theme.loading.gif) %>" alt="loading" />
             </div>
-        </transition>
+        </div>
+        <% } %>
         <%- partial("menu") %>
-        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+        <main id="main" class="<%- (theme.loading && theme.loading.enable) ? 'into-enter-active into-hidden' : 'into-enter-active' %>">
             <%- partial(type) %>
             <%- partial("footer") %>
-        </div>
+        </main>
         <% if (theme.preview.enable) { %>
-        <transition name="fade">
-            <div id="preview" ref="preview" v-show="previewShow">
-                <img id="preview-content" ref="previewContent" />
-            </div>
-        </transition>
+        <div id="preview" class="fade-transition fade-hidden">
+            <img id="preview-content" alt="preview" />
+        </div>
         <% } %>
     </div>
     <script src="<%- url_for("/js/main.js") %>"></script>

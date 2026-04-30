@@ -1,9 +1,6 @@
-mixins.math = {
-    created() {
-        this.renderers.push(this.math);
-    },
-    methods: {
-        math() {
+(function() {
+    window.renderers.push(() => {
+        if (typeof renderMathInElement !== "undefined") {
             renderMathInElement(document.body, {
                 delimiters: [
                     { left: "$$", right: "$$", display: true },
@@ -12,6 +9,8 @@ mixins.math = {
                     { left: "\\[", right: "\\]", display: true },
                 ],
             });
-        },
-    },
-};
+        } else if (typeof MathJax !== "undefined" && MathJax.typesetPromise) {
+            MathJax.typesetPromise();
+        }
+    });
+})();

@@ -1,13 +1,13 @@
 <%
     let posts = site.posts;
-    posts.data.sort((a, b) => b.date - a.date);
+    posts.data.sort((a, b) => a.date - b.date);
 %>
 <div id="archives">
     <% if (theme.search.enable) { %>
-    <input id="search-bar" class="input" placeholder="搜索" v-model="rawSearch" />
+    <input id="search-bar" class="input" placeholder="搜索" />
     <% } %>
-    <div id="timeline-wrap" ref="timeline">
-        <% posts.reverse().forEach((post, id) => { %>
+    <div id="timeline-wrap">
+        <% posts.forEach((post, id) => { %>
         <div class="timeline" data-title="<%- post.title.toLowerCase().replace(/\s+/g, "") %>">
             <div class="timeline-tail"></div>
             <div class="timeline-content">
@@ -36,10 +36,10 @@
                         <span class="tag">
                             <%
                                 const colors = theme.colors.filter((color) => color !== prev);
-                                let id = Math.floor(Math.random() * colors.length);
-                                prev = colors[id];
+                                let colorIdx = Math.floor(Math.random() * colors.length);
+                                prev = colors[colorIdx];
                             %>
-                            <a href="<%- url_for(tag.path) %>" style="color: <%- colors[id] %>">
+                            <a href="<%- url_for(tag.path) %>" style="color: <%- colors[colorIdx] %>">
                                 <%= tag.name %>
                             </a>
                         </span>

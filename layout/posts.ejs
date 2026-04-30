@@ -1,12 +1,11 @@
 <%
-    let posts = site.posts,
-        current = (page.current - 1) * config.index_generator.per_page;
-    posts.data.sort((a, b) => {
+    const current = (page.current - 1) * config.index_generator.per_page;
+    const sortedData = [...site.posts.data].sort((a, b) => {
         let x = a.pinned ?? 0,
             y = b.pinned ?? 0;
         return x === y ? b.date - a.date : y - x;
     });
-    posts = posts.slice(current, config.index_generator.per_page + current);
+    const posts = sortedData.slice(current, config.index_generator.per_page + current);
 %>
 <% posts.forEach((post) => { %>
 <div class="post">
@@ -42,7 +41,7 @@
         <% } %>
     </div>
     <div class="description">
-        <div class="content" v-pre>
+        <div class="content">
             <% if (typeof post.description !== "undefined") { %>
             <%- markdown(post.description) %>
             <% } else if (post.excerpt) { %>

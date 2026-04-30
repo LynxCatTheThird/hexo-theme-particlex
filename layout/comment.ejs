@@ -18,49 +18,55 @@
 <% } %>
 <% if (theme.gitalk.enable) { %>
 <script>
-    const gitalk = new Gitalk({
-        clientID: "<%- theme.gitalk.clientID %>",
-        clientSecret: "<%- theme.gitalk.clientSecret %>",
-        repo: "<%- theme.gitalk.repo %>",
-        owner: "<%- theme.gitalk.owner %>",
-        admin: "<%- theme.gitalk.admin %>".split(","),
-        language: "<%- theme.gitalk.language %>",
-        id: location.pathname,
-        <% if (theme.gitalk.proxy) { %>
-        proxy: "<%- theme.gitalk.proxy %>",
-        <% } %>
-    })
-    gitalk.render("gitalk-container");
+    window.addEventListener("load", function() {
+        const gitalk = new Gitalk({
+            clientID: "<%- theme.gitalk.clientID %>",
+            clientSecret: "<%- theme.gitalk.clientSecret %>",
+            repo: "<%- theme.gitalk.repo %>",
+            owner: "<%- theme.gitalk.owner %>",
+            admin: "<%- theme.gitalk.admin %>".split(","),
+            language: "<%- theme.gitalk.language %>",
+            id: location.pathname,
+            <% if (theme.gitalk.proxy) { %>
+            proxy: "<%- theme.gitalk.proxy %>",
+            <% } %>
+        });
+        gitalk.render("gitalk-container");
+    });
 </script>
 <% } %>
 <% if (theme.waline.enable) { %>
 <script>
-    Waline.init({
-        el: "#waline-container",
-        serverURL: "<%- theme.waline.serverURL %>",
-        commentCount: <%- theme.waline.commentCount %>,
-        pageview: <%- theme.waline.pageview %>,
-        emoji: "<%- (theme.waline.emoji) %>".split(","),
-        meta: "<%- (theme.waline.meta) %>".split(","),
-        requiredMeta: "<%- theme.waline.requiredMeta %>".split(","),
-        lang: "<%- theme.waline.lang %>",
-        wordLimit: <%- theme.waline.wordLimit %>,
-        pageSize: "<%- theme.waline.pageSize %>",
-        login: "<%- theme.waline.login %>",
-        <% if (theme.waline.locale) { %>
-        locale: <%- JSON.stringify(theme.waline.locale) %>,
-        <% } %>
+    window.addEventListener("load", function() {
+        Waline.init({
+            el: "#waline-container",
+            serverURL: "<%- theme.waline.serverURL %>",
+            commentCount: <%- theme.waline.commentCount %>,
+            pageview: <%- theme.waline.pageview %>,
+            emoji: "<%- (theme.waline.emoji) %>".split(","),
+            meta: "<%- (theme.waline.meta) %>".split(","),
+            requiredMeta: "<%- theme.waline.requiredMeta %>".split(","),
+            lang: "<%- theme.waline.lang %>",
+            wordLimit: <%- theme.waline.wordLimit %>,
+            pageSize: "<%- theme.waline.pageSize %>",
+            login: "<%- theme.waline.login %>",
+            <% if (theme.waline.locale) { %>
+            locale: <%- JSON.stringify(theme.waline.locale) %>,
+            <% } %>
+        });
     });
 </script>
 <% } %>
 <% if (theme.twikoo.enable) { %>
 <script>
-    twikoo.init({
-        el: "#twikoo-container",
-        envId: "<%- theme.twikoo.envID %>",
-        region: "<%- theme.twikoo.region %>",
-        path: <%- theme.twikoo.path %>,
-        lang: "<%- theme.twikoo.lang %>",
-    })
+    window.addEventListener("load", function() {
+        twikoo.init({
+            el: "#twikoo-container",
+            envId: "<%- theme.twikoo.envID %>",
+            region: "<%- theme.twikoo.region %>",
+            path: <%- theme.twikoo.path %>,
+            lang: "<%- theme.twikoo.lang %>",
+        });
+    });
 </script>
 <% } %>
